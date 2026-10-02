@@ -18,7 +18,7 @@ from .serializers import TransactionSerializer, InvestmentSerializer
 def transaction_list(request):
     transactions = Transaction.objects.filter(
         user=request.user
-    )
+    ).order_by("-date")
 
     transaction_type = request.GET.get("type")
 
