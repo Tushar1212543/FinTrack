@@ -1,0 +1,661 @@
+/* =========================================================
+   FinTrack Global Styles
+   ========================================================= */
+
+/* =========================
+   Global
+   ========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #222;
+}
+
+
+/* =========================
+   Navigation Bar
+   ========================= */
+
+.navbar {
+    min-height: 64px;
+    padding: 0 5%;
+    background: #2563eb;
+    color: white;
+
+    display: flex;
+    align-items: center;
+
+    box-sizing: border-box;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand a {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.navbar-links a {
+    display: flex;
+    align-items: center;
+
+    color: #eaf2ff;
+    text-decoration: none;
+
+    padding: 10px 14px;
+    border-radius: 7px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: 0.2s ease;
+}
+
+.navbar-links a:hover {
+    background: #1d4ed8;
+    color: white;
+}
+
+
+/* =========================
+   Profile Avatar
+   ========================= */
+
+.navbar-profile {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    padding: 0 !important;
+    margin-left: 2px;
+
+    text-decoration: none !important;
+    background: transparent !important;
+}
+
+.navbar-profile img,
+.default-avatar {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+    border: 2px solid white;
+
+    object-fit: cover;
+    box-sizing: border-box;
+
+    transition: transform 0.2s ease;
+}
+
+.default-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: white;
+    color: #2563eb;
+
+    font-size: 20px;
+    line-height: 1;
+}
+
+.navbar-profile:hover img,
+.navbar-profile:hover .default-avatar {
+    transform: scale(1.05);
+}
+
+
+/* =========================
+   Main Container
+   ========================= */
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 40px auto;
+}
+
+
+/* =========================
+   Headers
+   ========================= */
+
+.header {
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 32px;
+}
+
+.header h2 {
+    margin-bottom: 8px;
+}
+
+.header p {
+    color: #666;
+}
+
+
+/* =========================
+   Summary Cards
+   ========================= */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    transition: 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+.card h3 {
+    margin-top: 0;
+    color: #666;
+    font-size: 15px;
+}
+
+.card p {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+
+/* =========================
+   Actions / Buttons
+   ========================= */
+
+.actions {
+    margin-top: 30px;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.actions a {
+    display: inline-block;
+
+    padding: 12px 20px;
+
+    background: #2563eb;
+    color: white;
+
+    text-decoration: none;
+    border-radius: 8px;
+
+    font-weight: bold;
+
+    transition: 0.2s ease;
+}
+
+.actions a:hover {
+    background: #1d4ed8;
+}
+
+
+/* =========================
+   Transaction / Investment Lists
+   ========================= */
+
+.transaction-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.transaction-card {
+    background: white;
+
+    padding: 20px;
+    border-radius: 12px;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    transition: 0.2s ease;
+}
+
+.transaction-card:hover {
+    transform: translateY(-2px);
+}
+
+.transaction-info h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+}
+
+.transaction-info p {
+    margin: 5px 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.transaction-amount {
+    text-align: right;
+}
+
+.transaction-amount strong {
+    display: block;
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.transaction-type {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+
+/* =========================
+   Income / Expense
+   ========================= */
+
+.income {
+    color: #16803c;
+}
+
+.expense {
+    color: #c62828;
+}
+
+
+/* =========================
+   Delete Button
+   ========================= */
+
+.delete-form {
+    margin-top: 10px;
+}
+
+.delete-button {
+    border: none;
+
+    padding: 7px 12px;
+    border-radius: 6px;
+
+    background: #c62828;
+    color: white;
+
+    cursor: pointer;
+    font-weight: bold;
+
+    transition: 0.2s ease;
+}
+
+.delete-button:hover {
+    background: #a91f1f;
+}
+
+
+/* =========================
+   Edit Button
+   ========================= */
+
+.edit-button {
+    display: inline-block;
+
+    padding: 7px 12px;
+    margin-right: 6px;
+
+    border-radius: 6px;
+
+    background: #2563eb;
+    color: white;
+
+    text-decoration: none;
+    font-weight: bold;
+
+    transition: 0.2s ease;
+}
+
+.edit-button:hover {
+    background: #1d4ed8;
+}
+
+
+/* =========================
+   Form Errors
+   ========================= */
+
+.form-errors {
+    background: #ffe5e5;
+    color: #c62828;
+
+    padding: 12px 15px;
+    border-radius: 8px;
+
+    margin-bottom: 20px;
+}
+
+.form-errors p {
+    margin: 5px 0;
+}
+
+
+/* =========================
+   General Forms
+   ========================= */
+
+.card form label {
+    display: block;
+    margin-bottom: 6px;
+
+    font-weight: bold;
+}
+
+.card form input,
+.card form select {
+    width: 100%;
+
+    padding: 10px 12px;
+
+    border: 1px solid #ccc;
+    border-radius: 7px;
+
+    font-size: 14px;
+    background: white;
+
+    transition: 0.2s ease;
+}
+
+.card form input:focus,
+.card form select:focus {
+    outline: none;
+
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.card form button {
+    border: none;
+
+    padding: 11px 18px;
+    border-radius: 7px;
+
+    background: #2563eb;
+    color: white;
+
+    cursor: pointer;
+    font-weight: bold;
+
+    transition: 0.2s ease;
+}
+
+.card form button:hover {
+    background: #1d4ed8;
+}
+
+
+/* =========================================================
+   Edit Profile
+   ========================================================= */
+
+.profile-edit-card {
+    max-width: 650px;
+    margin: 30px auto;
+    padding: 30px;
+}
+
+.profile-edit-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile-edit-card .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.profile-edit-card label {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.profile-edit-card input,
+.profile-edit-card select {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+
+    background: #ffffff;
+    color: #111827;
+
+    font-size: 15px;
+
+    transition: 0.2s ease;
+}
+
+.profile-edit-card input:focus,
+.profile-edit-card select:focus {
+    outline: none;
+
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.profile-edit-card input:hover,
+.profile-edit-card select:hover {
+    border-color: #9ca3af;
+}
+
+
+/* =========================
+   Edit Profile Buttons
+   ========================= */
+
+.form-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-top: 8px;
+}
+
+.form-actions .btn-primary,
+.form-actions .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 11px 20px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.form-actions .btn-primary {
+    border: none;
+
+    background: #2563eb;
+    color: white;
+}
+
+.form-actions .btn-primary:hover {
+    background: #1d4ed8;
+}
+
+.form-actions .btn-secondary {
+    background: #f3f4f6;
+    color: #374151;
+
+    border: 1px solid #d1d5db;
+}
+
+.form-actions .btn-secondary:hover {
+    background: #e5e7eb;
+}
+
+
+/* =========================
+   Error Alert
+   ========================= */
+
+.alert-danger {
+    max-width: 650px;
+
+    margin: 20px auto;
+    padding: 12px 16px;
+
+    border-radius: 8px;
+
+    background: #fee2e2;
+    color: #b91c1c;
+
+    border: 1px solid #fecaca;
+}
+
+
+/* =========================================================
+   Responsive Design
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .navbar {
+        flex-direction: column;
+        gap: 12px;
+
+        padding: 15px 5%;
+    }
+
+    .navbar-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .navbar-links {
+        gap: 6px;
+    }
+
+    .navbar-profile {
+        width: 40px;
+        height: 40px;
+    }
+
+    .navbar-profile img,
+    .default-avatar {
+        width: 38px;
+        height: 38px;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .profile-edit-card {
+        margin: 20px 10px;
+        padding: 20px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-actions .btn-primary,
+    .form-actions .btn-secondary {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 550px) {
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .transaction-card {
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .transaction-amount {
+        text-align: left;
+    }
+
+    .navbar-links {
+        width: 100%;
+    }
+
+    .navbar-links a {
+        font-size: 13px;
+        padding: 8px 10px;
+    }
+
+    .container {
+        width: 92%;
+        margin: 25px auto;
+    }
+}
+
+.default-avatar svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+}

@@ -1,0 +1,319 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Profile - FinTrack</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+
+
+<body>
+
+
+    <!-- Navbar -->
+
+    <nav class="navbar">
+
+        <div class="navbar-brand">
+
+            <a href="/dashboard/">
+                FinTrack
+            </a>
+
+        </div>
+
+
+        <div class="navbar-links">
+
+            <a href="/dashboard/">
+                Dashboard
+            </a>
+
+            <a href="/transactions-page/">
+                Transactions
+            </a>
+
+            <a href="/investments-page/">
+                Investments
+            </a>
+
+            <a href="/logout/">
+                Logout
+            </a>
+
+        </div>
+
+
+        <!-- Profile Avatar -->
+
+        <a href="/profile/" class="navbar-profile">
+
+            {% if request.user.profile.profile_picture %}
+
+                <img
+                    src="{{ request.user.profile.profile_picture.url }}"
+                    alt="Profile"
+                >
+
+            {% else %}
+                <div class="default-avatar">
+                    <svg
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                    >
+                        <circle cx="12" cy="8" r="4" fill="currentColor"/>
+                        <path
+                            d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"
+                            fill="currentColor"
+                        />
+                    </svg>
+                </div>
+            {% endif %}
+
+        </a>
+
+    </nav>
+
+
+    <!-- Main Content -->
+
+    <main class="container">
+
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>
+                    Edit Profile
+                </h1>
+
+                <p>
+                    Update your FinTrack account information.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Error Message -->
+
+        {% if error %}
+
+            <div class="alert alert-danger">
+
+                {{ error }}
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- Edit Profile Card -->
+
+        <div class="card profile-edit-card">
+
+
+            <form
+                method="POST"
+                enctype="multipart/form-data"
+            >
+
+                {% csrf_token %}
+
+
+                <!-- Profile Picture -->
+
+                <div class="form-group">
+
+                    <label for="profile_picture">
+                        Profile Picture
+                    </label>
+
+
+                    {% if profile.profile_picture %}
+
+                        <img
+                            src="{{ profile.profile_picture.url }}"
+                            alt="Profile Picture"
+                            class="profile-picture-preview"
+                        >
+
+
+                        <!-- Delete Profile Picture -->
+
+                        <button
+                            type="submit"
+                            class="delete-button"
+                            formaction="/profile/delete-picture/"
+                            formmethod="POST"
+                            onclick="return confirm('Are you sure you want to delete your profile picture?');"
+                        >
+                            Delete Profile Picture
+                        </button>
+
+                    {% endif %}
+
+
+                    <input
+                        type="file"
+                        id="profile_picture"
+                        name="profile_picture"
+                        accept="image/*"
+                    >
+
+                </div>
+
+
+                <!-- Username -->
+
+                <div class="form-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        value="{{ user.username }}"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Email -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value="{{ user.email }}"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Phone -->
+
+                <div class="form-group">
+
+                    <label for="phone_number">
+                        Phone Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="phone_number"
+                        name="phone_number"
+                        value="{{ profile.phone_number }}"
+                        placeholder="Enter phone number"
+                    >
+
+                </div>
+
+
+                <!-- Currency -->
+
+                <div class="form-group">
+
+                    <label for="currency">
+                        Currency
+                    </label>
+
+
+                    <select
+                        id="currency"
+                        name="currency"
+                    >
+
+                        <option
+                            value="INR"
+                            {% if profile.currency == "INR" %}selected{% endif %}
+                        >
+                            INR - Indian Rupee
+                        </option>
+
+
+                        <option
+                            value="USD"
+                            {% if profile.currency == "USD" %}selected{% endif %}
+                        >
+                            USD - US Dollar
+                        </option>
+
+
+                        <option
+                            value="EUR"
+                            {% if profile.currency == "EUR" %}selected{% endif %}
+                        >
+                            EUR - Euro
+                        </option>
+
+
+                        <option
+                            value="GBP"
+                            {% if profile.currency == "GBP" %}selected{% endif %}
+                        >
+                            GBP - British Pound
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Buttons -->
+
+                <div class="form-actions">
+
+                    <button
+                        type="submit"
+                        class="btn-primary"
+                    >
+                        Save Changes
+                    </button>
+
+
+                    <a
+                        href="/profile/"
+                        class="btn-secondary"
+                    >
+                        Cancel
+                    </a>
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+    </main>
+
+
+</body>
+
+</html>

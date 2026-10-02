@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FinTrack - Add Investment</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <h1>Add Investment</h1>
+            <p>Add a stock to your portfolio</p>
+        </div>
+
+        <div class="card">
+
+            {% if errors %}
+                <div class="form-errors">
+
+                    {% for field, messages in errors.items %}
+
+                        {% for message in messages %}
+                            <p>{{ field|title }}: {{ message }}</p>
+                        {% endfor %}
+
+                    {% endfor %}
+
+                </div>
+            {% endif %}
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <label>Stock Symbol</label>
+
+                <input
+                    type="text"
+                    name="symbol"
+                    placeholder="e.g. RELIANCE"
+                    value="{{ form_data.symbol|default:'' }}"
+                    required
+                >
+
+                <br><br>
+
+
+                <label>Quantity</label>
+
+                <input
+                    type="number"
+                    name="quantity"
+                    step="0.0001"
+                    min="0.0001"
+                    placeholder="e.g. 5"
+                    value="{{ form_data.quantity|default:'' }}"
+                    required
+                >
+
+                <br><br>
+
+
+                <label>Buy Price</label>
+
+                <input
+                    type="number"
+                    name="buy_price"
+                    step="0.01"
+                    min="0.01"
+                    placeholder="e.g. 2500"
+                    value="{{ form_data.buy_price|default:'' }}"
+                    required
+                >
+
+                <br><br>
+
+
+                <button type="submit">
+                    Add Investment
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <div class="actions">
+
+            <a href="/investments-page/">
+                Back to Investments
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

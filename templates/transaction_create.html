@@ -1,0 +1,292 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>FinTrack - Add Transaction</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+
+        .category-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .category-row select {
+            flex: 1;
+        }
+
+        .add-category-button {
+            height: 44px;
+            padding: 0 15px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            white-space: nowrap;
+            box-sizing: border-box;
+        }
+
+        .add-category-button:hover {
+            opacity: 0.9;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="container">
+
+
+        <div class="header">
+
+            <h1>
+                Add Transaction
+            </h1>
+
+            <p>
+                Record a new income or expense
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+
+            {% if errors %}
+
+                <div class="form-errors">
+
+                    {% for field, messages in errors.items %}
+
+                        {% for message in messages %}
+
+                            <p>
+                                {{ field|title }}: {{ message }}
+                            </p>
+
+                        {% endfor %}
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+
+            <form method="POST" id="transaction-form">
+
+                {% csrf_token %}
+
+
+                <!-- Description -->
+
+                <label for="description">
+                    Description
+                </label>
+
+                <input
+                    type="text"
+                    id="description"
+                    name="description"
+                    required
+                >
+
+
+                <br><br>
+
+
+                <!-- Amount -->
+
+                <label for="amount">
+                    Amount
+                </label>
+
+                <input
+                    type="number"
+                    id="amount"
+                    name="amount"
+                    step="0.01"
+                    min="0.01"
+                    required
+                >
+
+
+                <br><br>
+
+
+                <!-- Transaction Type -->
+
+                <label for="transaction_type">
+                    Transaction Type
+                </label>
+
+                <select
+                    name="transaction_type"
+                    id="transaction_type"
+                    required
+                >
+
+                    <option value="">
+                        Select Type
+                    </option>
+
+                    <option value="INCOME">
+                        Income
+                    </option>
+
+                    <option value="EXPENSE">
+                        Expense
+                    </option>
+
+                </select>
+
+
+                <br><br>
+
+
+                <!-- Category -->
+
+                <label for="category">
+                    Category
+                </label>
+
+                <div class="category-row">
+
+                    <select
+                        name="category"
+                        id="category"
+                    >
+
+                        <option value="">
+                            Select Category
+                        </option>
+
+                        {% for category in categories %}
+
+                            <option value="{{ category.id }}">
+                                {{ category.name }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+
+                    <a
+                        href="/categories/create-page/?next=/transactions/create-page/"
+                        class="add-category-button"
+                    >
+                        + Add Category
+                    </a>
+
+                </div>
+
+
+                <br><br>
+
+
+                <button type="submit">
+                    Add Transaction
+                </button>
+
+
+            </form>
+
+
+        </div>
+
+
+        <div class="actions">
+
+            <a href="/transactions-page/">
+                Back to Transactions
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+    <script>
+
+        const transactionType =
+            document.getElementById("transaction_type");
+
+        const category =
+            document.getElementById("category");
+
+        const transactionForm =
+            document.getElementById("transaction-form");
+
+
+        function updateCategoryRequirement() {
+
+            if (transactionType.value === "EXPENSE") {
+
+                category.required = true;
+
+            } else {
+
+                category.required = false;
+
+            }
+
+        }
+
+
+        transactionType.addEventListener(
+            "change",
+            updateCategoryRequirement
+        );
+
+
+        transactionForm.addEventListener(
+            "submit",
+            function () {
+
+                /*
+                 * For Income with no category selected,
+                 * disable the category field temporarily.
+                 *
+                 * Disabled fields are not submitted to Django,
+                 * so an empty string is not sent to the serializer.
+                 */
+
+                if (
+                    transactionType.value === "INCOME" &&
+                    category.value === ""
+                ) {
+
+                    category.disabled = true;
+
+                }
+
+            }
+        );
+
+
+        updateCategoryRequirement();
+
+    </script>
+
+
+</body>
+
+</html>

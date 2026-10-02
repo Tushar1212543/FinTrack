@@ -1,0 +1,204 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>FinTrack - Transactions</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+
+        .transaction-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            align-items: center;
+        }
+
+        .edit-button,
+        .transaction-actions .delete-button {
+            width: 80px;
+            height: 38px;
+            box-sizing: border-box;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .edit-button {
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .edit-button:hover {
+            opacity: 0.9;
+        }
+
+        .transaction-actions .delete-form {
+            margin: 0;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+
+            <h1>Transactions</h1>
+
+            <p>Your income and expenses</p>
+
+        </div>
+
+
+        {% if transactions %}
+
+            <div class="transaction-list">
+
+                {% for transaction in transactions %}
+
+                    <div class="transaction-card">
+
+
+                        <div class="transaction-info">
+
+                            <h3>
+                                {{ transaction.description }}
+                            </h3>
+
+                            <p>
+
+                                Category:
+
+                                {{ transaction.category|default:"Uncategorized" }}
+
+                            </p>
+
+                            <p>
+
+                                Date:
+
+                                {{ transaction.date|date:"d M Y, h:i A" }}
+
+                            </p>
+
+                        </div>
+
+
+                        <div class="transaction-amount">
+
+
+                            {% if transaction.transaction_type == "INCOME" %}
+
+                                <strong class="income">
+
+                                    ₹{{ transaction.amount|floatformat:2 }}
+
+                                </strong>
+
+                                <span class="transaction-type income">
+
+                                    INCOME
+
+                                </span>
+
+
+                            {% else %}
+
+                                <strong class="expense">
+
+                                    ₹{{ transaction.amount|floatformat:2 }}
+
+                                </strong>
+
+                                <span class="transaction-type expense">
+
+                                    EXPENSE
+
+                                </span>
+
+                            {% endif %}
+
+
+                            <!-- Edit + Delete Buttons -->
+
+                            <div class="transaction-actions">
+
+
+                                <a
+                                    href="/transactions/{{ transaction.id }}/edit-page/"
+                                    class="edit-button"
+                                >
+                                    Edit
+                                </a>
+
+
+                                <form
+                                    method="POST"
+                                    action="/transactions/{{ transaction.id }}/delete-page/"
+                                    class="delete-form"
+                                >
+
+                                    {% csrf_token %}
+
+                                    <button
+                                        type="submit"
+                                        class="delete-button"
+                                    >
+                                        Delete
+                                    </button>
+
+                                </form>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+        {% else %}
+
+            <div class="card">
+
+                <p>No transactions found.</p>
+
+            </div>
+
+        {% endif %}
+
+
+        <div class="actions">
+
+            <a href="/transactions/create-page/">
+                + Add Transaction
+            </a>
+
+            <a href="/dashboard/">
+                Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

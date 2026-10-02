@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Profile - FinTrack</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            min-height: 100vh;
+            color: #222;
+        }
+
+        /* =========================
+           Navigation
+        ========================= */
+
+        .navbar {
+            background: #2563eb;
+            min-height: 64px;
+            padding: 0 5%;
+
+            display: flex;
+            align-items: center;
+
+            box-sizing: border-box;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-brand a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            margin-left: auto;
+        }
+
+        .navbar-links a {
+            display: flex;
+            align-items: center;
+
+            color: #eaf2ff;
+            text-decoration: none;
+
+            padding: 10px 14px;
+            border-radius: 7px;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            transition: 0.2s ease;
+        }
+
+        .navbar-links a:hover {
+            background: #1d4ed8;
+            color: white;
+        }
+
+        /* =========================
+           Profile Avatar
+        ========================= */
+
+        .navbar-profile {
+            width: 42px;
+            height: 42px;
+
+            margin-left: 24px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-decoration: none;
+        }
+
+        .navbar-profile img,
+        .navbar-profile .default-avatar {
+            width: 40px;
+            height: 40px;
+
+            border-radius: 50%;
+            border: 2px solid white;
+
+            object-fit: cover;
+            box-sizing: border-box;
+
+            transition: transform 0.2s ease;
+        }
+
+        .navbar-profile .default-avatar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: white;
+            color: #2563eb;
+
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .navbar-profile:hover img,
+        .navbar-profile:hover .default-avatar {
+            transform: scale(1.05);
+        }
+
+        /* =========================
+           Profile Container
+        ========================= */
+
+        .container {
+            width: 90%;
+            max-width: 700px;
+            margin: 50px auto;
+        }
+
+        .header {
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin-bottom: 8px;
+            font-size: 32px;
+        }
+
+        .header p {
+            color: #666;
+        }
+
+        /* =========================
+           Profile Card
+        ========================= */
+
+        .profile-card {
+            background: white;
+            padding: 30px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .profile-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 18px 0;
+
+            border-bottom: 1px solid #eee;
+        }
+
+        .profile-row:last-child {
+            border-bottom: none;
+        }
+
+        .profile-label {
+            color: #666;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .profile-value {
+            font-size: 16px;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        /* =========================
+           Edit Button
+        ========================= */
+
+        .actions {
+            margin-top: 25px;
+        }
+
+        .edit-button {
+            display: inline-block;
+
+            width: 100%;
+            padding: 12px;
+
+            background: #2563eb;
+            color: white;
+
+            text-decoration: none;
+            text-align: center;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        .edit-button:hover {
+            background: #1d4ed8;
+        }
+
+        /* =========================
+           Responsive
+        ========================= */
+
+        @media (max-width: 550px) {
+
+            .container {
+                width: 92%;
+                margin: 30px auto;
+            }
+
+            .profile-card {
+                padding: 22px;
+            }
+
+            .profile-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+
+            .profile-value {
+                text-align: left;
+            }
+
+            .navbar {
+                flex-direction: column;
+                padding: 15px 5%;
+                gap: 12px;
+            }
+
+            .navbar-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-left: 0;
+            }
+
+            .navbar-profile {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         Navigation
+    ========================= -->
+
+    <nav class="navbar">
+
+        <div class="navbar-brand">
+
+            <a href="/dashboard/">
+                FinTrack
+            </a>
+
+        </div>
+
+
+        <div class="navbar-links">
+
+            <a href="/dashboard/">
+                Dashboard
+            </a>
+
+            <a href="/transactions-page/">
+                Transactions
+            </a>
+
+            <a href="/investments-page/">
+                Investments
+            </a>
+
+            <a href="/logout/">
+                Logout
+            </a>
+
+        </div>
+
+
+        <!-- Profile Avatar -->
+
+        <a href="/profile/" class="navbar-profile">
+
+            {% if request.user.profile.profile_picture %}
+
+                <img
+                    src="{{ request.user.profile.profile_picture.url }}"
+                    alt="Profile"
+                >
+
+            {% else %}
+
+                {% if request.user.profile.profile_picture %}
+                    <img src="{{ request.user.profile.profile_picture.url }}" alt="Profile">
+                {% else %}
+                    <div class="default-avatar">
+                        <svg
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                            aria-hidden="true"
+                        >
+                            <circle cx="12" cy="8" r="4" fill="currentColor"/>
+                            <path
+                                d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"
+                                fill="currentColor"
+                            />
+                        </svg>
+                    </div>
+                {% endif %}
+
+            {% endif %}
+
+        </a>
+
+    </nav>
+
+
+    <!-- =========================
+         Profile
+    ========================= -->
+
+    <div class="container">
+
+        <div class="header">
+
+            <h1>
+                Profile
+            </h1>
+
+            <p>
+                Your personal account information
+            </p>
+
+        </div>
+
+
+        <div class="profile-card">
+
+            <div class="profile-row">
+
+                <div class="profile-label">
+                    Username
+                </div>
+
+                <div class="profile-value">
+                    {{ user.username }}
+                </div>
+
+            </div>
+
+
+            <div class="profile-row">
+
+                <div class="profile-label">
+                    Email
+                </div>
+
+                <div class="profile-value">
+                    {{ user.email }}
+                </div>
+
+            </div>
+
+
+            <div class="profile-row">
+
+                <div class="profile-label">
+                    Phone Number
+                </div>
+
+                <div class="profile-value">
+
+                    {{ profile.phone_number|default:"Not provided" }}
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-row">
+
+                <div class="profile-label">
+                    Currency
+                </div>
+
+                <div class="profile-value">
+                    {{ profile.currency }}
+                </div>
+
+            </div>
+
+
+            <div class="actions">
+
+                <a
+                    href="/profile/edit/"
+                    class="edit-button"
+                >
+                    Edit Profile
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

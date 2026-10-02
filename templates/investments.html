@@ -1,0 +1,258 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>FinTrack - Investments</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Header -->
+        <div class="header">
+            <h1>Investments</h1>
+            <p>Your investment portfolio</p>
+        </div>
+
+
+        <!-- Portfolio Summary -->
+        <div class="cards">
+
+            <div class="card">
+                <h3>Total Invested</h3>
+                <p>₹{{ total_invested|floatformat:2 }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Current Value</h3>
+                <p>₹{{ total_current_value|floatformat:2 }}</p>
+            </div>
+
+            <div class="card">
+                <h3>Total P/L</h3>
+
+                {% if total_profit_loss >= 0 %}
+                    <p class="income">
+                        +₹{{ total_profit_loss|floatformat:2 }}
+                    </p>
+                {% else %}
+                    <p class="expense">
+                        -₹{{ total_profit_loss|stringformat:"s"|slice:"1:"|floatformat:2 }}
+                    </p>
+                {% endif %}
+
+            </div>
+
+
+            <div class="card">
+                <h3>Overall Return</h3>
+
+                {% if overall_return_percentage >= 0 %}
+                    <p class="income">
+                        +{{ overall_return_percentage }}%
+                    </p>
+                {% else %}
+                    <p class="expense">
+                        {{ overall_return_percentage }}%
+                    </p>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- Individual Investments -->
+        <div class="header" style="margin-top: 40px;">
+
+            <h2>Your Investments</h2>
+
+            <p>
+                Live market prices and portfolio performance
+            </p>
+
+        </div>
+
+
+        {% if investments %}
+
+            <div class="transaction-list">
+
+                {% for investment in investments %}
+
+                    <div class="transaction-card">
+
+
+                        <!-- Investment Information -->
+                        <div class="transaction-info">
+
+                            <h3>
+                                {{ investment.symbol }}
+                            </h3>
+
+
+                            <p>
+                                Quantity:
+                                {{ investment.quantity|floatformat:"-4" }}
+                            </p>
+
+
+                            <p>
+                                Buy Price:
+                                ₹{{ investment.buy_price|floatformat:2 }}
+                            </p>
+
+
+                            {% if investment.current_price %}
+
+                                <p>
+                                    Current Price:
+                                    ₹{{ investment.current_price|floatformat:2 }}
+                                </p>
+
+
+                                <p>
+                                    Current Value:
+                                    ₹{{ investment.current_value|floatformat:2 }}
+                                </p>
+
+                            {% endif %}
+
+
+                            <p>
+                                Purchase Date:
+                                {{ investment.purchase_date|date:"d M Y, h:i A" }}
+                            </p>
+
+                        </div>
+
+
+                        <!-- Profit / Loss -->
+                        <div class="transaction-amount">
+
+                            {% if investment.profit_loss is not None %}
+
+
+                                {% if investment.profit_loss >= 0 %}
+
+                                    <strong class="income">
+                                        +₹{{ investment.profit_loss|floatformat:2 }}
+                                    </strong>
+
+                                    <span class="transaction-type income">
+                                        PROFIT
+                                    </span>
+
+                                {% else %}
+
+                                    <strong class="expense">
+                                        -₹{{ investment.profit_loss|stringformat:"s"|slice:"1:"|floatformat:2 }}
+                                    </strong>
+
+                                    <span class="transaction-type expense">
+                                        LOSS
+                                    </span>
+
+                                {% endif %}
+
+
+                                <p>
+                                    Return:
+
+                                    {% if investment.return_percentage >= 0 %}
+
+                                        <span class="income">
+                                            +{{ investment.return_percentage }}%
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="expense">
+                                            {{ investment.return_percentage }}%
+                                        </span>
+
+                                    {% endif %}
+
+                                </p>
+
+
+                            {% else %}
+
+                                <span class="expense">
+                                    Price unavailable
+                                </span>
+
+                            {% endif %}
+
+
+                            <!-- Edit Investment -->
+                            <a
+                                href="/investments/{{ investment.id }}/edit-page/"
+                                class="edit-button"
+                            >
+                                Edit
+                            </a>
+
+
+                            <!-- Delete Investment -->
+                            <form
+                                method="POST"
+                                action="/investments/{{ investment.id }}/delete-page/"
+                                class="delete-form"
+                            >
+
+                                {% csrf_token %}
+
+                                <button
+                                    type="submit"
+                                    class="delete-button"
+                                >
+                                    Delete
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+        {% else %}
+
+            <div class="card">
+
+                <p>
+                    No investments found.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- Navigation -->
+        <div class="actions">
+
+            <a href="/investments/create-page/">
+                + Add Investment
+            </a>
+
+            <a href="/dashboard/">
+                Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
